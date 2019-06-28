@@ -26,18 +26,14 @@ You can set a search limit for visitors via IP addresses. The plugin automatical
 ### Can I set a time for blocking?
 Yes, you can via the settings page.
 
-
 ## Screenshots
 ### 1. The Settings Page screenshot-1.png
 ![](screenshot-1.png)
-
-
 
 ## Changelog
 
 ### 1.0
 Inıtial Release
-
 
 ## Upgrade Notice
 
