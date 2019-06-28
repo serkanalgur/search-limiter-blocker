@@ -4,7 +4,7 @@
 Plugin Name: Search Limiter & Blocker
 Plugin URI: http://www.wpadami.com/
 Description: Set and limit search count of visitors. Also, you can block visitor IP.
-Version: 1.0
+Version: 1.1
 Author: Serkan Algur
 Author URI: http://www.wpadami.com
 License: GPLv2 or later
@@ -37,17 +37,17 @@ class SearchLimiterBlocker {
 		<div class="wrap">
 			<h2>Search Limiter & Blocker</h2>
 			<p></p>
-			<?php settings_errors(); ?>
+				<?php settings_errors(); ?>
 
 			<form method="post" action="options.php">
-				<?php
+					<?php
 					settings_fields( 'search_limiter_blocker_option_group' );
 					do_settings_sections( 'search-limiter-blocker-admin' );
 					submit_button();
-				?>
+					?>
 			</form>
 		</div>
-		<?php
+			<?php
 	}
 
 	public function search_limiter_blocker_page_init() {
@@ -160,35 +160,39 @@ class SearchLimiterBlocker {
 		$is_block     = get_transient( 'visitor_ip_block' . $this->get_the_user_ip() );
 		$will_deleted = get_option( 'visitor_ip_block' . $this->get_the_user_ip() . '-deleteafter30min' );
 
-		// Check for block
-		if ( 'blocked' === $is_block ) :
-			// Kill The Proccess
-			wp_die( esc_html( $message_for_blocked_visitor_2 ), 'You are Blocked By Search Limiter & Blocker for ' . esc_html( $time_for_block ) . ' seconds', 403 );
-		else :
-			// Not Blocked. Continue as normal
-			if ( $query->is_search ) :
-				if ( ( $visitor_i_p_count >= $visitor_i_p_limit ) && 'yes' === $will_deleted ) :
-					delete_option( 'visitor_ip_count-' . $this->get_the_user_ip() );
-					delete_option( 'visitor_ip_block' . $this->get_the_user_ip() . '-deleteafter30min' );
+		if ( preg_match( '/google|yandex|yndx|spider|bot|slurp|msn|bing|adsbot|AdIdxBot|search|face|baidu|duck|sogou|youdao|ccbot|alexa|microsoft/i', gethostbyaddr( $this->get_the_user_ip() ) ) ) {
+			// Search Bots Excluded by default
+			return $query;
+		} else {
 
-					// Check for limit again and add one more.
-				elseif ( $visitor_i_p_count < $visitor_i_p_limit ) :
-					$visitor_i_p_count++;
-					update_option( 'visitor_ip_count-' . $this->get_the_user_ip(), $visitor_i_p_count );
-					return $query;
+			// Check for block
+			if ( 'blocked' === $is_block ) :
+				// Kill The Proccess
+				wp_die( esc_html( $message_for_blocked_visitor_2 ), 'You are Blocked By Search Limiter & Blocker for ' . esc_html( $time_for_block ) . ' seconds', 403 );
 				else :
-					// Add option for block
-					set_transient( 'visitor_ip_block' . $this->get_the_user_ip(), 'blocked', $time_for_block );
-					update_option( 'visitor_ip_block' . $this->get_the_user_ip() . '-deleteafter30min', 'yes' );
+					// Not Blocked. Continue as normal
+					if ( $query->is_search ) :
+						if ( ( $visitor_i_p_count >= $visitor_i_p_limit ) && 'yes' === $will_deleted ) :
+							delete_option( 'visitor_ip_count-' . $this->get_the_user_ip() );
+							delete_option( 'visitor_ip_block' . $this->get_the_user_ip() . '-deleteafter30min' );
 
-					// Kill The Proccess
-					wp_die( esc_html( $message_for_blocked_visitor_2 ), 'You are Blocked By Search Limiter & Blocker for ' . esc_html( $time_for_block ) . ' seconds', 403 );
+							// Check for limit again and add one more.
+						elseif ( $visitor_i_p_count < $visitor_i_p_limit ) :
+							$visitor_i_p_count++;
+							update_option( 'visitor_ip_count-' . $this->get_the_user_ip(), $visitor_i_p_count );
+							return $query;
+						else :
+							// Add option for block
+							set_transient( 'visitor_ip_block' . $this->get_the_user_ip(), 'blocked', $time_for_block );
+							update_option( 'visitor_ip_block' . $this->get_the_user_ip() . '-deleteafter30min', 'yes' );
+
+							// Kill The Proccess
+							wp_die( esc_html( $message_for_blocked_visitor_2 ), 'You are Blocked By Search Limiter & Blocker for ' . esc_html( $time_for_block ) . ' seconds', 403 );
+						endif;
+					endif;
 				endif;
-			endif;
-		endif;
+		}
 	}
-
-
 
 }
 $search_limiter_blocker = new SearchLimiterBlocker();
