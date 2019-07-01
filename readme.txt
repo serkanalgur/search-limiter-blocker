@@ -26,9 +26,9 @@ Yes, you can via the settings page.
 1. The Settings Page screenshot-1.png
 
 == Changelog ==
-= 1.0 =
-Inıtial Release
+= 1.1 =
+Search bots excluded from IP ban by default
 
 == Upgrade Notice ==
-= 0.1 =
+= 1.0 =
 Initial Release. No Upgrade Notice

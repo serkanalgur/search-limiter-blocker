@@ -1,13 +1,16 @@
 # Search Limiter & Blocker
-**Contributors:** kaisercrazy
-**Tags:** search,block,limit
-**Donate link:** https://paypal.me/serkanalgur
-**Requires at least:** 5.1
-**Tested up to:** 5.2
-**Requires PHP:** 5.6
-**Stable tag:** trunk
-**License:** GPLv2 or later
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+
+![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/search-limiter-blocker.svg?style=flat) ![WordPress Plugin: Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/search-limiter-blocker.svg?style=flat) ![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/search-limiter-blocker.svg)
+
+* **Contributors:** kaisercrazy (Serkan Algur)
+* **Tags:** search,block,limit
+* **Donate link:** https://paypal.me/serkanalgur
+* **Requires at least:** 5.1
+* **Tested up to:** 5.2
+* **Requires PHP:** 5.6
+* **Stable tag:** trunk
+* **License:** GPLv2 or later
+* **License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 Set and limit search count of visitors. Also, you can block visitor IP.
 
@@ -32,10 +35,10 @@ Yes, you can via the settings page.
 
 ## Changelog
 
-### 1.0
-Inıtial Release
+### 1.1
+Search bots excluded from IP ban by default
 
 ## Upgrade Notice
 
-### 0.1
+### 1.0
 Initial Release. No Upgrade Notice
